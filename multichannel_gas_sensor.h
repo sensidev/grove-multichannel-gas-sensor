@@ -2,6 +2,10 @@
 #define __MUTICHANNEL_GAS_SENSOR_H__
 
 #include "mbed.h"
+#include "mbed_debug.h"
+
+#define DEBUG_GROVE 0
+#define DEBUG_GROVE_I2C 0
 
 #define DEFAULT_I2C_ADDR    0x04 << 1       // shift 1 bit, mbed uses 8bits, arduino 7bits.
 
@@ -35,10 +39,10 @@
 
 enum{CO, NO2, NH3, C3H8, C4H10, CH4, H2, C2H5OH};
 
-class GroveMutichannelGasSensor{
+class GroveMutichannelGasSensor {
 
 private:
-    I2C _i2c;
+    I2C *_i2c;
 
     int __version = 0;
     char dta_test[20];
@@ -106,8 +110,6 @@ public:
     void change_i2c_address(unsigned char addr);
     unsigned char getVersion();
 };
-
-extern Serial pc;
 
 #endif
 

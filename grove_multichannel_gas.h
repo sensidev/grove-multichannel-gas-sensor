@@ -1,5 +1,5 @@
-#ifndef __MUTICHANNEL_GAS_SENSOR_H__
-#define __MUTICHANNEL_GAS_SENSOR_H__
+#ifndef GROVE_MUTICHANNEL_GAS_SENSOR_H
+#define GROVE_MUTICHANNEL_GAS_SENSOR_H
 
 #include "mbed.h"
 #include "mbed_debug.h"
@@ -44,7 +44,7 @@ class GroveMutichannelGasSensor {
 private:
     I2C *_i2c;
 
-    int __version = 0;
+    int __version;
     char dta_test[20];
 
     unsigned int readChAdcValue(int ch);

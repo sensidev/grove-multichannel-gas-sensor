@@ -1,6 +1,6 @@
-#include "multichannel_gas_sensor.h"
+#include "grove_multichannel_gas.h"
 
-GroveMutichannelGasSensor::GroveMutichannelGasSensor(I2C &i2c) {
+GroveMultichannelGasSensor::GroveMultichannelGasSensor(I2C &i2c) {
     _i2c = &i2c;
     i2cAddress = DEFAULT_I2C_ADDR;
 }
@@ -9,7 +9,7 @@ GroveMutichannelGasSensor::GroveMutichannelGasSensor(I2C &i2c) {
 ** Function name:           begin
 ** Descriptions:            initialize I2C
 *********************************************************************************************************/
-void GroveMutichannelGasSensor::begin(int address)
+void GroveMultichannelGasSensor::begin(int address)
 {
     __version = 1;          // version 1/2
 
@@ -17,7 +17,7 @@ void GroveMutichannelGasSensor::begin(int address)
     __version = getVersion();
 }
 
-unsigned char GroveMutichannelGasSensor::getVersion()
+unsigned char GroveMultichannelGasSensor::getVersion()
 {
     if(get_addr_dta(CMD_READ_EEPROM, ADDR_IS_SET) == 1126)        // get version
     {
@@ -31,7 +31,7 @@ unsigned char GroveMutichannelGasSensor::getVersion()
     return 1;
 }
 
-void GroveMutichannelGasSensor::begin()
+void GroveMultichannelGasSensor::begin()
 {
     begin(DEFAULT_I2C_ADDR);
 }
@@ -40,7 +40,7 @@ void GroveMutichannelGasSensor::begin()
 ** Function name:           sendI2C
 ** Descriptions:            send one byte to I2C Wire
 *********************************************************************************************************/
-void GroveMutichannelGasSensor::sendI2C(char dta)
+void GroveMultichannelGasSensor::sendI2C(char dta)
 {
     char i2c_data_write[1];
 
@@ -49,7 +49,7 @@ void GroveMutichannelGasSensor::sendI2C(char dta)
 }
 
 
-unsigned int GroveMutichannelGasSensor::get_addr_dta(char addr_reg)
+unsigned int GroveMultichannelGasSensor::get_addr_dta(char addr_reg)
 {
     unsigned int dta = 0;
     char i2c_data_write[1];
@@ -114,7 +114,7 @@ unsigned int GroveMutichannelGasSensor::get_addr_dta(char addr_reg)
     return dta;
 }
 
-unsigned int GroveMutichannelGasSensor::get_addr_dta(char addr_reg, char __dta)
+unsigned int GroveMultichannelGasSensor::get_addr_dta(char addr_reg, char __dta)
 {
     char i2c_data_write[2];
     char i2c_data_read[2];
@@ -138,7 +138,7 @@ unsigned int GroveMutichannelGasSensor::get_addr_dta(char addr_reg, char __dta)
     return dta;
 }
 
-void GroveMutichannelGasSensor::write_i2c(unsigned char addr, const char *dta, int dta_len)
+void GroveMultichannelGasSensor::write_i2c(unsigned char addr, const char *dta, int dta_len)
 {
     _i2c->write((int) addr, dta, dta_len);
 }
@@ -148,7 +148,7 @@ void GroveMutichannelGasSensor::write_i2c(unsigned char addr, const char *dta, i
 ** Function name:           readData
 ** Descriptions:            read 4 bytes from I2C slave
 *********************************************************************************************************/
-int16_t GroveMutichannelGasSensor::readData(uint8_t cmd)
+int16_t GroveMultichannelGasSensor::readData(uint8_t cmd)
 {
     char i2c_data_read[4];
     uint8_t checksum = 0;
@@ -174,7 +174,7 @@ int16_t GroveMutichannelGasSensor::readData(uint8_t cmd)
 ** Function name:           readR0
 ** Descriptions:            read R0 stored in slave MCU
 *********************************************************************************************************/
-int16_t GroveMutichannelGasSensor::readR0(void)
+int16_t GroveMultichannelGasSensor::readR0(void)
 {
     int16_t rtnData = 0;
 
@@ -204,7 +204,7 @@ int16_t GroveMutichannelGasSensor::readR0(void)
 ** Function name:           readR
 ** Descriptions:            read resistance value of each channel from slave MCU
 *********************************************************************************************************/
-int16_t GroveMutichannelGasSensor::readR(void)
+int16_t GroveMultichannelGasSensor::readR(void)
 {
     int16_t rtnData = 0;
 
@@ -237,7 +237,7 @@ gas - gas type
 ** Returns:
 float value - concentration of the gas
 *********************************************************************************************************/
-float GroveMutichannelGasSensor::calcGas(int gas)
+float GroveMultichannelGasSensor::calcGas(int gas)
 {
 
     float ratio0, ratio1, ratio2;
@@ -324,7 +324,7 @@ float GroveMutichannelGasSensor::calcGas(int gas)
 ** Function name:           changeI2cAddr
 ** Descriptions:            change I2C address of the slave MCU, and this address will be stored in EEPROM of slave MCU
 *********************************************************************************************************/
-void GroveMutichannelGasSensor::changeI2cAddr(uint8_t newAddr)
+void GroveMultichannelGasSensor::changeI2cAddr(uint8_t newAddr)
 {
     char i2c_data_write[2];
 
@@ -339,7 +339,7 @@ void GroveMutichannelGasSensor::changeI2cAddr(uint8_t newAddr)
 ** Function name:           powerOn
 ** Descriptions:            power on sensor heater
 *********************************************************************************************************/
-void GroveMutichannelGasSensor::powerOn(void)
+void GroveMultichannelGasSensor::powerOn(void)
 {
     if(__version == 1)
     {
@@ -357,7 +357,7 @@ void GroveMutichannelGasSensor::powerOn(void)
 ** Function name:           powerOff
 ** Descriptions:            power off sensor heater
 *********************************************************************************************************/
-void GroveMutichannelGasSensor::powerOff(void)
+void GroveMultichannelGasSensor::powerOff(void)
 {
     if(__version == 1)
     {
@@ -371,7 +371,7 @@ void GroveMutichannelGasSensor::powerOff(void)
     }
 }
 
-void GroveMutichannelGasSensor::display_eeprom()
+void GroveMultichannelGasSensor::display_eeprom()
 {
     if(__version == 1)
     {
@@ -389,7 +389,7 @@ void GroveMutichannelGasSensor::display_eeprom()
     debug_if(DEBUG_GROVE, "ADDR_I2C_ADDRESS = %d\r\n", get_addr_dta(CMD_READ_EEPROM, ADDR_I2C_ADDRESS));
 }
 
-float GroveMutichannelGasSensor::getR0(unsigned char ch)         // 0:CH3, 1:CO, 2:NO2
+float GroveMultichannelGasSensor::getR0(unsigned char ch)         // 0:CH3, 1:CO, 2:NO2
 {
     if(__version == 1)
     {
@@ -422,7 +422,7 @@ float GroveMutichannelGasSensor::getR0(unsigned char ch)         // 0:CH3, 1:CO,
     return r;
 }
 
-float GroveMutichannelGasSensor::getRs(unsigned char ch)         // 0:CH3, 1:CO, 2:NO2
+float GroveMultichannelGasSensor::getRs(unsigned char ch)         // 0:CH3, 1:CO, 2:NO2
 {
 
     if(__version == 1)
@@ -453,7 +453,7 @@ float GroveMutichannelGasSensor::getRs(unsigned char ch)         // 0:CH3, 1:CO,
     return r;
 }
 
-void GroveMutichannelGasSensor::change_i2c_address(unsigned char addr)
+void GroveMultichannelGasSensor::change_i2c_address(unsigned char addr)
 {
     dta_test[0] = CMD_CHANGE_I2C;
     dta_test[1] = addr;

@@ -39,7 +39,7 @@
 
 enum{CO, NO2, NH3, C3H8, C4H10, CH4, H2, C2H5OH};
 
-class GroveMutichannelGasSensor {
+class GroveMultichannelGasSensor {
 
 private:
     I2C *_i2c;
@@ -53,7 +53,7 @@ private:
     unsigned int adcValueR0_NO2_Buf;
 
 public:
-    GroveMutichannelGasSensor(I2C &i2c);
+    GroveMultichannelGasSensor(I2C &i2c);
 
     uint8_t i2cAddress;     //I2C address of this MCU
     uint16_t res0[3];       //sensors res0
